@@ -30,19 +30,24 @@ add_action('admin_init', 'gfuaa_admin_init');
 function gfuaa_section_one_callback(){};
 function gfuaa_form_id_callback(){};
 
-add_action('admin_menu', 'gfuaa_menu_page');
 function gfuaa_menu_page() {
-    add_submenu_page (
-        'options-general.php',
-        'Gravity Form File Upload Settings',
-        'Gravity Form Upload as Attachment',
+    add_menu_page (
+        'Gravity Form File Upload as Attachment',
+        'Gravity Form File Upload',
         'manage_options',
         'gfuaa-settings',
-        'gfuaa_settings_page'
+        'gfuaa_settings_page',
+        'dashicons-upload'
     );
 }
+add_action('admin_menu', 'gfuaa_menu_page');
 
 function gfuaa_settings_page(){
+
+    if( !current_user_can('manage_options')) {
+        wp_die('You do not have sufficient permission to access this page.');
+    }
+
     ?>
     <div class="wrap">
         <h2>Gravity Form Upload as Attachment</h2>
